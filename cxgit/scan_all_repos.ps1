@@ -6,7 +6,7 @@
 #
 # --------------------------------------------------------------------------------------------
 
-
+$home_dir = Get-Location
 $deleteReport = "true"
 
 function scanGitlab
@@ -309,7 +309,7 @@ while (($readeachrepo = $repoStreamreader.ReadLine()) -ne $null)
 		..\cloc-1.86.exe . > ..\$name.log
 		
 		#Delete the repo dir as its no longer needed
-		cd c:/cxgit
+		cd $home_dir
 		Remove-Item .\$name -recurse -force
 		
 		#Read the CLOC report and extract languages and LOC
@@ -387,8 +387,7 @@ Write-Output "            Loading the Excel worksheet              "
 Write-Output "     Please refresh the data table to see results    "
 Write-Output "_____________________________________________________"
 
-		
-$FilePath = "C:/cxgit/License_Report.xlsx"
+$FilePath =  Join-Path -Path $home_dir.path -ChildPath "License_Report.xlsx"
 
 # Create an Object Excel.Application using Com interface
 $objExcel = New-Object -ComObject Excel.Application
